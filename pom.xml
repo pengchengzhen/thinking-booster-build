@@ -13,6 +13,8 @@
     <groupId>com.thinking.booster</groupId>
     <artifactId>thinking-booster-build</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <description>基础POM依赖</description>
 
     <properties>
 
