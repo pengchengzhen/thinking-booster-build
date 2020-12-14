@@ -18,6 +18,7 @@
     <description>Thinking parent pom, managing plugins and dependencies for projects</description>
 
     <properties>
+
         <!-- project -->
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -67,29 +68,10 @@
         <jooq.version>3.10.0</jooq.version>
         <hibernate.version>5.2.12.Final</hibernate.version>
 
-        <!-- override plugins -->
-        <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
-        <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
-        <maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
-        <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
-        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
-        <maven-dependency-plugin.version>3.0.2</maven-dependency-plugin.version>
-        <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
-        <maven-failsafe-plugin.version>2.20.1</maven-failsafe-plugin.version>
-        <maven-invoker-plugin.version>3.0.1</maven-invoker-plugin.version>
-        <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
-        <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
-        <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
-        <maven-site-plugin.version>3.6</maven-site-plugin.version>
-        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
-        <maven-war-plugin.version>3.2.0</maven-war-plugin.version>
-        <versions-maven-plugin.version>2.5</versions-maven-plugin.version>
-        <git-commit-id-plugin.version>2.2.4</git-commit-id-plugin.version>
-
         <!-- plugins -->
         <buildnumber-plugin.version>1.4</buildnumber-plugin.version>
         <maven-replacer-plugin.version>1.5.3</maven-replacer-plugin.version>
+        <maven-eclipse-plugin.version>1.11</maven-eclipse-plugin.version>
         <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
         <sonar-maven-plugin.version>5.1</sonar-maven-plugin.version>
         <docker-maven-plugin.version>1.0.0</docker-maven-plugin.version>
@@ -113,7 +95,6 @@
         <mybatis.mapper.version>3.4.0</mybatis.mapper.version>
         <mongobee.version>0.13</mongobee.version>
         <querydsl.version>4.2.1</querydsl.version>
-        <mysql.version>5.1.47</mysql.version>
 
         <!-- job -->
         <elasticjob.version>2.1.5</elasticjob.version>
@@ -194,7 +175,6 @@
 
         <!-- common -->
         <guava.version>27.1-jre</guava.version>
-        <commons-lang3.version>3.6</commons-lang3.version>
         <commons-collections4.version>4.1</commons-collections4.version>
         <commons-io.version>2.5</commons-io.version>
         <commons-discovery.version>0.5</commons-discovery.version>
@@ -221,6 +201,18 @@
         <commons.lang3.version>3.4</commons.lang3.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>http://host:port/content/groups/public</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <url>http://host:port/content/groups/public</url>
+        </pluginRepository>
+    </pluginRepositories>
     <build>
         <defaultGoal>clean package</defaultGoal>
         <!-- Turn on filtering by default for spring-boot & spring-cloud & netflix properties -->
@@ -260,13 +252,6 @@
                     <groupId>org.mybatis.generator</groupId>
                     <artifactId>mybatis-generator-maven-plugin</artifactId>
                     <version>${mybatis.generator.version}</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>mysql</groupId>
-                            <artifactId>mysql-connector-java</artifactId>
-                            <version>${mysql.version}</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
 
                 <!-- 生成时间戳 -->
@@ -543,6 +528,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven-enforcer-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>enforce-versions</id>
@@ -562,14 +548,6 @@
                             <version>[1.8,)</version>
                         </requireJavaVersion>
                     </rules>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <configuration>
-                    <downloadSources>true</downloadSources>
-                    <downloadJavadocs>true</downloadJavadocs>
                 </configuration>
             </plugin>
         </plugins>
@@ -670,11 +648,6 @@
                         <groupId>com.google.guava</groupId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.version}</version>
             </dependency>
 
             <!-- job -->
@@ -920,6 +893,11 @@
                 <artifactId>log4j-web</artifactId>
                 <version>${log4j2.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.googlecode.log4jdbc</groupId>
+                <artifactId>log4jdbc</artifactId>
+                <version>${log4jdbc.version}</version>
+            </dependency>
 
             <!-- test -->
             <dependency>
@@ -1145,11 +1123,6 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
